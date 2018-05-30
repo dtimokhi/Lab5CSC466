@@ -118,9 +118,7 @@ def page_rank(graph, d, e):
     # Rest of the iteration
     r = 1
     while np.abs(sum(pg[r][key] - pg[r - 1][key] for key in pg[r])) > e:
-        pg.append({node: (1 - d) * prob + d * sum(
-            (1 / graph.get_out_d(in_node[0])) * (pg[r][in_node[0]]) for in_node in graph[node]) for node in
-                   unique})
+        pg.append({node: (1 - d) * prob + d * sum((1 / graph.get_out_d(in_node[0])) * (pg[r][in_node[0]]) for in_node in graph[node]) for node in unique})
         r += 1
     end = round(time.time() - start_time, 5)
     return pg[r], r + 1, end
