@@ -3,6 +3,9 @@ from collections import defaultdict
 import time
 
 class Graph:
+    '''
+        Graph class for creating the graphs for each dataset
+    '''
     def __init__(self, directed = False):
         self._edge_dict = defaultdict(list)
         self._node_out_degree = defaultdict(int)
@@ -13,6 +16,12 @@ class Graph:
     def __getitem__(self, key):
         return self._edge_dict[key]
     def add_edge(self, vert_1, vert_2, weight = 0):
+        '''
+        :param vert_1: node one
+        :param vert_2: node two
+        :param weight: weight of nodes
+        :return:
+        '''
         self._node_out_degree[vert_2] += 1
         self._edge_dict[vert_1].append((vert_2, weight))
         if not self._directed:
@@ -23,22 +32,43 @@ class Graph:
     def pop(self, node):
         self._edge_dict.pop(node, None)
     def count(self):
+        '''
+        :return: number of elements in graph
+        '''
         return len(self._edge_dict)
     def get_dict(self):
+        '''
+        :return: the dictionary graph
+        '''
         return self._edge_dict
     def keys(self):
+        '''
+        :return: returns the keys of the dictionary
+        '''
         return self._edge_dict.keys()
     def set_direction(self, direction):
+        '''
+        :param direction: direction to set too
+        :return: none
+        '''
         self._directed = direction
     def add_key(self, key):
         self._edge_dict[key] = []
     def get_out_d(self, key):
         return self._node_out_degree[key]
     def get_unique_nodes(self):
+        '''
+        :return: returns all unique nodes
+        '''
         return self._unique_edges
 
 
 def make_graph(file_name, directed = False):
+    '''
+    :param file_name: file to make dataset for
+    :param directed: directed or undirected graph
+    :return: graph, end time
+    '''
     start_time = time.time()
     graph = Graph(directed)
     with open(file_name) as file_object:
@@ -53,6 +83,10 @@ def make_graph(file_name, directed = False):
     return graph, end
 
 def make_graph_snap(file_name):
+    '''
+    :param file_name: makes a graph for snap datasets
+    :return: graph
+    '''
     start_time = time.time()
     graph = Graph(directed = True)
     with open(file_name) as file_parse:
@@ -65,6 +99,12 @@ def make_graph_snap(file_name):
 
 
 def page_rank(graph, d, e):
+    '''
+    :param graph: graph of the dataset at hand
+    :param d: probability
+    :param e: distance cutoff
+    :return: rankings, iterations, time
+    '''
     start_time = time.time()
     prob = 1.0 / graph.count()
     unique = graph.get_unique_nodes().keys()
@@ -87,6 +127,13 @@ def page_rank(graph, d, e):
 
 
 def run_page_rank(filename, d, e, snap=False):
+    '''
+    :param filename: file data
+    :param d: probabiltiy
+    :param e: distance cutoff
+    :param snap: snap data or not
+    :return: none
+    '''
     if not snap:
         graph, graph_time = make_graph(filename)
     else:
