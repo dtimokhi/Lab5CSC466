@@ -6,7 +6,7 @@
 
   <File_Name> - Enter file name for graph data. E.g. stateboarders.csv
 
-  <Flag> - Boolean variable True if using SNAP data. 
+  \<Flag\> - Boolean variable True if using SNAP data. 
            E.g. If File_Name=wiki-Vote.txt then Flag=True
 
 ## Output
