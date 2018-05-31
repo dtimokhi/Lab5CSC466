@@ -2,7 +2,7 @@
 
 # Page Rank
 
-## python3 pageRank.py <File_Name> <Flag>
+## python3 pageRank.py \<File_Name\> \<Flag\>
 
   <File_Name> - Enter file name for graph data. E.g. stateboarders.csv
 
