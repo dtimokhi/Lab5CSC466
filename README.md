@@ -9,6 +9,8 @@
   \<Flag\> - Boolean variable True if using SNAP data. 
            E.g. If File_Name=wiki-Vote.txt then Flag=True
 
+## E.g. python3 pageRank.py wiki-Vote.txt True
+
 ## Output
 
   Time: to Graph, to Rank
