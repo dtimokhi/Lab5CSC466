@@ -4,7 +4,7 @@ import sys
 def main():
     filename = sys.argv[1]
     snap = eval(sys.argv[2])
-    ps.run_page_rank(filename,.15,.001, snap)
+    ps.run_page_rank(filename,.85,.001, snap)
 
     print("")
     print("Nodes ranked in descending order are in ranks.txt")

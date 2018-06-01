@@ -75,7 +75,7 @@ def make_graph(file_name, directed = False):
         for line in file_object:
             line_list = [x.strip() for x in line.replace("\n", "").replace('"', '').split(",")]
             start_edge = line_list[2]; end_edge = line_list[0]
-            if "NCAA" in file_name and int(line_list[3].strip()) > int(line_list[1].strip()):
+            if "NCAA" in file_name and int(line_list[3].strip()) < int(line_list[1].strip()):
                 start_edge = line_list[0]; end_edge = line_list[2]
                 graph.set_direction(True)
             graph.add_edge(start_edge, end_edge, line_list[1])
@@ -113,12 +113,11 @@ def page_rank(graph, d, e):
     pg.append({k: prob for k, v in graph.get_unique_nodes().items()})
 
     # Second Iteration
-    pg.append({node: (1 - d) * prob + d * sum(
-        (1 / graph.get_out_d(in_node[0])) * (pg[0][in_node[0]]) for in_node in graph[node]) for node in unique})
+    pg.append({node: (1 - d) * prob + d * sum(((pg[0][in_node[0]]) / graph.get_out_d(in_node[0])) for in_node in graph[node]) for node in unique})
     # Rest of the iteration
     r = 1
-    while np.abs(sum(pg[r][key] - pg[r - 1][key] for key in pg[r])) > e:
-        pg.append({node: (1 - d) * prob + d * sum((1 / graph.get_out_d(in_node[0])) * (pg[r][in_node[0]]) for in_node in graph[node]) for node in unique})
+    while sum(abs(pg[r][key] - pg[r - 1][key]) for key in pg[r]) > e:
+        pg.append({node: (1 - d) * prob + d * sum(((pg[r][in_node[0]])/ graph.get_out_d(in_node[0])) for in_node in graph[node]) for node in unique})
         r += 1
     end = round(time.time() - start_time, 5)
     return pg[r], r + 1, end
